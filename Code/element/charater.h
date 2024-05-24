@@ -28,6 +28,8 @@ typedef struct _Character
     int anime;      // counting the time of animation
     int anime_time; // indicate how long the animation
     bool new_proj;
+    ALLEGRO_BITMAP *img;
+    int ProjectileType;
     Shape *hitbox; // the hitbox of object
 } Character;
 Elements *New_Character(int label);

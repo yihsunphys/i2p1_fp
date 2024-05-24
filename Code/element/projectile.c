@@ -21,7 +21,7 @@ Elements *New_Projectile(int label, int x, int y,double v,int type)
 
     //**
     char Buffer[30];
-    sprintf(Buffer,"assets/image/%s.png",ProjectileTypeaArray[type]);
+    sprintf(Buffer,"assets/img/%s.png",ProjectileTypeaArray[type]);
     pDerivedObj->img = al_load_bitmap(Buffer);
     //**
 

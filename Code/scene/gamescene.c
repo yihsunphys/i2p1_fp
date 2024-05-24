@@ -1,4 +1,14 @@
 #include "gamescene.h"
+//**  For Timer and Random functions
+#define Min_Interval 0.2
+#include <time.h>
+#include <stdlib.h>
+clock_t start, end;
+double interval;
+int counter;
+int gameround;
+//**
+
 /*
    [GameScene function]
 */
@@ -6,8 +16,9 @@ Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
     Scene *pObj = New_Scene(label);
+
     // setting derived object member
-    pDerivedObj->background = al_load_bitmap("assets/image/stage.jpg");
+    pDerivedObj->background = al_load_bitmap("assets/img/stage.jpg");
     pObj->pDerivedObj = pDerivedObj;
     // register element
     _Register_elements(pObj, New_Floor(Floor_L));
@@ -18,10 +29,31 @@ Scene *New_GameScene(int label)
     pObj->Update = game_scene_update;
     pObj->Draw = game_scene_draw;
     pObj->Destroy = game_scene_destroy;
+    //// Start the timer(in second)
+    start = clock()/ CLOCKS_PER_SEC;
+    interval=1;
+    counter=0;
+    gameround=2;
+    ////
     return pObj;
 }
 void game_scene_update(Scene *self)
 {
+    //**Random generation
+    end = clock()/ CLOCKS_PER_SEC;;
+    if((double)(end-start)>interval){
+        //restart timer
+        start= clock()/ CLOCKS_PER_SEC;
+        Elements *Pro;
+        int ProType=(rand()+(int)end)%gameround;
+        Pro = New_Projectile(Projectile_L,(rand()+(int)end)%WIDTH,-50,1,ProType);
+        counter++;
+        _Register_elements(self, Pro);
+        if(!(counter%10)&&interval>Min_Interval)
+            interval-=0.2;
+    }
+    //**
+
     // update every element
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)

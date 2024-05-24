@@ -6,15 +6,28 @@
 /*
    [Projectile object]
 */
+//** All the type of projectile
+typedef enum ProjectileType
+{
+    RED=0,
+    BLUE,
+    GREEN,
+    YELLOW,
+    WHITE,
+} ProjectileType;
+//**
+
 typedef struct _Projectile
 {
     int x, y;          // the position of image
     int width, height; // the width and height of image
-    int v;             // the velocity of projectile
+    //**
+    double v;             // the velocity of projectile
+    //**
     ALLEGRO_BITMAP *img;
     Shape *hitbox; // the hitbox of object
 } Projectile;
-Elements *New_Projectile(int label, int x, int y, int v);
+Elements *New_Projectile(int label, int x, int y, double v,int type);
 void Projectile_update(Elements *self);
 void Projectile_interact(Elements *self, Elements *tar);
 void Projectile_draw(Elements *self);

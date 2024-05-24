@@ -3,12 +3,28 @@
 /*
    [Projectile function]
 */
-Elements *New_Projectile(int label, int x, int y, int v)
+//**
+const char *ProjectileTypeaArray[] = {
+    "red1", 
+    "blue1", 
+    "green1", 
+    "yellow1", 
+    "white1", 
+};
+//**
+
+Elements *New_Projectile(int label, int x, int y,double v,int type)
 {
     Projectile *pDerivedObj = (Projectile *)malloc(sizeof(Projectile));
     Elements *pObj = New_Elements(label);
     // setting derived object member
-    pDerivedObj->img = al_load_bitmap("assets/image/projectile.png");
+
+    //**
+    char Buffer[30];
+    sprintf(Buffer,"assets/image/%s.png",ProjectileTypeaArray[type]);
+    pDerivedObj->img = al_load_bitmap(Buffer);
+    //**
+
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = x;
@@ -18,8 +34,9 @@ Elements *New_Projectile(int label, int x, int y, int v)
                                      pDerivedObj->y + pDerivedObj->height / 2,
                                      min(pDerivedObj->width, pDerivedObj->height) / 2);
     // setting the interact object
-    pObj->inter_obj[pObj->inter_len++] = Tree_L;
-    pObj->inter_obj[pObj->inter_len++] = Floor_L;
+    //**
+    pObj->inter_obj[pObj->inter_len++] = Character_L;
+    //**
     // setting derived object function
     pObj->pDerivedObj = pDerivedObj;
     pObj->Update = Projectile_update;
@@ -32,7 +49,8 @@ Elements *New_Projectile(int label, int x, int y, int v)
 void Projectile_update(Elements *self)
 {
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    _Projectile_update_position(self, Obj->v, 0);
+     Obj->v+=0.1;
+    _Projectile_update_position(self, 0, Obj->v);
 }
 void _Projectile_update_position(Elements *self, int dx, int dy)
 {
@@ -42,21 +60,18 @@ void _Projectile_update_position(Elements *self, int dx, int dy)
     Shape *hitbox = Obj->hitbox;
     hitbox->update_center_x(hitbox, dx);
     hitbox->update_center_y(hitbox, dy);
+    //**
+    if(Obj->y>HEIGHT)
+        self->dele = true;
+    //**
 }
 void Projectile_interact(Elements *self, Elements *tar)
 {
-    Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-    if (tar->label == Floor_L)
+    if (tar->label == Character_L)
     {
-        if (Obj->x < 0 - Obj->width)
-            self->dele = true;
-        else if (Obj->x > WIDTH + Obj->width)
-            self->dele = true;
-    }
-    else if (tar->label == Tree_L)
-    {
-        Tree *tree = ((Tree *)(tar->pDerivedObj));
-        if (tree->hitbox->overlap(tree->hitbox, Obj->hitbox))
+        Projectile *Obj = ((Projectile *)(self->pDerivedObj));
+        Character *chara = ((Character *)(tar->pDerivedObj));
+        if (chara->hitbox->overlap(chara->hitbox, Obj->hitbox))
         {
             self->dele = true;
         }

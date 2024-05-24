@@ -5,11 +5,11 @@
 */
 //**
 const char *ProjectileTypeaArray[] = {
-    "red1", 
-    "blue1", 
-    "green1", 
-    "yellow1", 
-    "white1", 
+    "meat", 
+    "fish", 
+    "vegetable", 
+    "banana", 
+    "milk", 
 };
 //**
 
@@ -22,6 +22,7 @@ Elements *New_Projectile(int label, int x, int y,double v,int type)
     //**
     char Buffer[30];
     sprintf(Buffer,"assets/img/%s.png",ProjectileTypeaArray[type]);
+    //printf("%s", Buffer);
     pDerivedObj->img = al_load_bitmap(Buffer);
     //**
 

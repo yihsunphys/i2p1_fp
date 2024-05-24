@@ -18,7 +18,7 @@ Scene *New_GameScene(int label)
     Scene *pObj = New_Scene(label);
 
     // setting derived object member
-    pDerivedObj->background = al_load_bitmap("assets/img/stage.jpg");
+    pDerivedObj->background = al_load_bitmap("assets/img/background.png");
     pObj->pDerivedObj = pDerivedObj;
     // register element
     _Register_elements(pObj, New_Floor(Floor_L));
@@ -33,7 +33,7 @@ Scene *New_GameScene(int label)
     start = clock()/ CLOCKS_PER_SEC;
     interval=1;
     counter=0;
-    gameround=2;
+    gameround=5;
     ////
     return pObj;
 }

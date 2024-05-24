@@ -109,14 +109,14 @@ void Character_update(Elements *self)
                 pro = New_Projectile(Projectile_L,
                                      chara->x + chara->width - 100,
                                      chara->y + 10,
-                                     5);
+                                     5,RED);
             }
             else
             {
                 pro = New_Projectile(Projectile_L,
                                      chara->x - 50,
                                      chara->y + 10,
-                                     -5);
+                                     -5, RED);
             }
             _Register_elements(scene, pro);
             chara->new_proj = true;

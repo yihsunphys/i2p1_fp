@@ -15,10 +15,12 @@ Scene *New_Menu(int label)
     al_reserve_samples(20);
     pDerivedObj->sample_instance = al_create_sample_instance(pDerivedObj->song);
     pDerivedObj->img= al_load_bitmap("assets/img/StartDark.png");
+    pDerivedObj->imgControl = al_load_bitmap("assets/img/Control.png");
     pDerivedObj->title_width= al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->title_height = al_get_bitmap_height(pDerivedObj->img);
+    pDerivedObj->control_width= al_get_bitmap_width(pDerivedObj->imgControl);
     pDerivedObj->title_x = (WIDTH -pDerivedObj->title_width)/2;
-    pDerivedObj->title_y = (HEIGHT-pDerivedObj->title_height)/2;
+    pDerivedObj->title_y = (HEIGHT-pDerivedObj->title_height)/2+200;
 
     // Loop the song until the display closes
     al_set_sample_instance_playmode(pDerivedObj->sample_instance, ALLEGRO_PLAYMODE_LOOP);
@@ -38,9 +40,10 @@ void menu_update(Scene *self)
     Menu *Obj = ((Menu *)(self->pDerivedObj));
     ALLEGRO_MOUSE_STATE state;
     al_get_mouse_state(&state);
+    //If mouse.position is inside the title
     if (mouse.x>Obj->title_x && mouse.x<(Obj->title_x+Obj->title_width) && mouse.y>Obj->title_y&& mouse.y<(Obj->title_y+Obj->title_height)){
         Obj->img = al_load_bitmap("assets/img/StartLight.png");
-        if (state.buttons & 1)
+        if (state.buttons & 1) //if (mouse:left click)
         {
             self->scene_end = true;
             window = 1;
@@ -54,6 +57,7 @@ void menu_draw(Scene *self)
 {
     Menu *Obj = ((Menu *)(self->pDerivedObj));
     al_draw_bitmap(Obj->img, Obj->title_x, Obj->title_y, 0);
+    al_draw_bitmap(Obj->imgControl, (WIDTH-Obj->control_width)/2, Obj->title_y-300, 0);
     al_play_sample_instance(Obj->sample_instance);
 }
 void menu_destroy(Scene *self)

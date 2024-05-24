@@ -28,10 +28,10 @@ Elements *New_Character(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = 300;
     pDerivedObj->y = 500;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
-                                        pDerivedObj->y-pDerivedObj->height/2,
-                                        pDerivedObj->x + pDerivedObj->width/2,
-                                        pDerivedObj->y + pDerivedObj->height/2);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
+                                        pDerivedObj->y,
+                                        pDerivedObj->x + pDerivedObj->width,
+                                        pDerivedObj->y + pDerivedObj->height);
     pDerivedObj->dir = false; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = STOP;

@@ -28,10 +28,10 @@ Elements *New_Character(int label)
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = 300;
     pDerivedObj->y = 500;
-    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
-                                        pDerivedObj->y,
-                                        pDerivedObj->x + pDerivedObj->width,
-                                        pDerivedObj->y + pDerivedObj->height);
+    pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x-pDerivedObj->width/2,
+                                        pDerivedObj->y-pDerivedObj->height/2,
+                                        pDerivedObj->x + pDerivedObj->width/2,
+                                        pDerivedObj->y + pDerivedObj->height/2);
     pDerivedObj->dir = false; // true: face to right, false: face to left
     // initial the animation component
     pDerivedObj->state = STOP;
@@ -46,18 +46,20 @@ Elements *New_Character(int label)
 }
 void Character_update(Elements *self)
 {
-    // use the idea of finite state machine to deal with different state
     Character *chara = ((Character *)(self->pDerivedObj));
-
+    if(mouse.x>WIDTH-chara->width/2||mouse.x<chara->width/2)
+        return;
+    // use the idea of finite state machine to deal with different state
+    _Character_update_position(self,mouse.x-chara->x,0);
+    chara->x = mouse.x; 
     
-   chara->x = mouse.x; 
 
 }
 void Character_draw(Elements *self)
 {
     // with the state, draw corresponding image
     Character *chara = ((Character *)(self->pDerivedObj));
-    al_draw_bitmap(chara->img, chara->x, chara->y, 0);
+    al_draw_bitmap(chara->img, chara->x-(chara->width)/2, chara->y, 0);
 }
 void Character_destory(Elements *self)
 {

@@ -18,7 +18,7 @@ Scene *New_GameScene(int label)
     Scene *pObj = New_Scene(label);
 
     // setting derived object member
-    pDerivedObj->background = al_load_bitmap("assets/img/stage.jpg");
+    pDerivedObj->background = al_load_bitmap("assets/img/background.png");
     pObj->pDerivedObj = pDerivedObj;
     // register element
     _Register_elements(pObj, New_Floor(Floor_L));

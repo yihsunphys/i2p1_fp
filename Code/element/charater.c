@@ -49,7 +49,7 @@ void Character_update(Elements *self)
     // use the idea of finite state machine to deal with different state
     Character *chara = ((Character *)(self->pDerivedObj));
 
-
+    
    chara->x = mouse.x; 
 
 }

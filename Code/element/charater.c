@@ -46,8 +46,8 @@ Elements *New_Character(int label)
 }
 void Character_update(Elements *self)
 {
-    // use the idea of finite state machine to deal with different state
     Character *chara = ((Character *)(self->pDerivedObj));
+
     if (key_state[ALLEGRO_KEY_B]){
       chara->ProjectileType = RED;
       chara->img = al_load_bitmap("assets/img/red1.png");
@@ -68,67 +68,33 @@ void Character_update(Elements *self)
       chara->ProjectileType = WHITE;
       chara->img = al_load_bitmap("assets/img/white1.png");
     }
+
     if(mouse.x>WIDTH-chara->width/2||mouse.x<chara->width/2)
         return;
     // use the idea of finite state machine to deal with different state
     _Character_update_position(self,mouse.x-chara->x,0);
     chara->x = mouse.x; 
+
 }
 void Character_draw(Elements *self)
 {
     // with the state, draw corresponding image
     Character *chara = ((Character *)(self->pDerivedObj));
+
     //if(chara->state == NORMAL){
       al_draw_bitmap(chara->img, chara->x-(chara->width)/2, chara->y, 0);
     //}
     /*
     else if(chara->state == EAT){
-      if(chara->ProjectileType == RED) {
-      al_draw_bitmap(al_load_bitmap("assets/img/red2.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/red3.png"), chara->x, chara->y, 0);
-      }
-      else if(chara->ProjectileType == BLUE) {
-      al_draw_bitmap(al_load_bitmap("assets/img/blue2.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/blue3.png"), chara->x, chara->y, 0);
-      }
-      else if(chara->ProjectileType == GREEN) {
-      al_draw_bitmap(al_load_bitmap("assets/img/green2.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/green3.png"), chara->x, chara->y, 0);
-      }
-      else if(chara->ProjectileType == YELLOW) {
-      al_draw_bitmap(al_load_bitmap("assets/img/yellow2.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/yellow3.png"), chara->x, chara->y, 0);
-      }
-      if(chara->ProjectileType == WHITE) {
-      al_draw_bitmap(al_load_bitmap("assets/img/white2.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/white3.png"), chara->x, chara->y, 0);
-      }
+      // eat animation
       chara->state = NORMAL;
     }
     else if(chara->state == EAT_WRONG){
-      if(chara->ProjectileType == RED) {
-      al_draw_bitmap(al_load_bitmap("assets/img/red4.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/red5.png"), chara->x, chara->y, 0);
-      }
-      else if(chara->ProjectileType == BLUE) {
-      al_draw_bitmap(al_load_bitmap("assets/img/blue4.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/blue5.png"), chara->x, chara->y, 0);
-      }
-      else if(chara->ProjectileType == GREEN) {
-      al_draw_bitmap(al_load_bitmap("assets/img/green4.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/green5.png"), chara->x, chara->y, 0);
-      }
-      else if(chara->ProjectileType == YELLOW) {
-      al_draw_bitmap(al_load_bitmap("assets/img/yellow4.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/yellow5.png"), chara->x, chara->y, 0);
-      }
-      if(chara->ProjectileType == WHITE) {
-      al_draw_bitmap(al_load_bitmap("assets/img/white4.png"), chara->x, chara->y, 0);
-      al_draw_bitmap(al_load_bitmap("assets/img/white5.png"), chara->x, chara->y, 0);
-      }
+      // eat wrong animation
       chara->state = NORMAL;
     }
     */
+
 }
 void Character_destory(Elements *self)
 {

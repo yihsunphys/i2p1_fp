@@ -1,5 +1,6 @@
 #include "projectile.h"
 #include "../shapes/Circle.h"
+#include "../scene/gamescene.h"
 /*
    [Projectile function]
 */
@@ -25,7 +26,7 @@ Elements *New_Projectile(int label, int x, int y,double v,int type)
     //printf("%s", Buffer);
     pDerivedObj->img = al_load_bitmap(Buffer);
     //**
-
+    pDerivedObj->ProjectileType = type;
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = x;
@@ -44,7 +45,7 @@ Elements *New_Projectile(int label, int x, int y,double v,int type)
     pObj->Interact = Projectile_interact;
     pObj->Draw = Projectile_draw;
     pObj->Destroy = Projectile_destory;
-
+   
     return pObj;
 }
 void Projectile_update(Elements *self)
@@ -69,12 +70,22 @@ void _Projectile_update_position(Elements *self, int dx, int dy)
 void Projectile_interact(Elements *self, Elements *tar)
 {
     if (tar->label == Character_L)
-    {
+    {   
         Projectile *Obj = ((Projectile *)(self->pDerivedObj));
         Character *chara = ((Character *)(tar->pDerivedObj));
-        if (chara->hitbox->overlap(chara->hitbox, Obj->hitbox))
-        {
-            self->dele = true;
+        if(chara->hitbox->overlap(chara->hitbox, Obj->hitbox) &&
+           chara->ProjectileType == Obj->ProjectileType 
+           ){
+                self->dele = true;
+                score[gameround]++;
+                chara->state = EAT;
+        }
+        else if(chara->hitbox->overlap(chara->hitbox, Obj->hitbox) &&
+           chara->ProjectileType != Obj->ProjectileType 
+           ){
+                
+                
+                chara->state = EAT_WRONG;
         }
     }
 }

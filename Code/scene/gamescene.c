@@ -1,4 +1,6 @@
 #include "gamescene.h"
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 //**  For Timer and Random functions
 #define Min_Interval 0.2
 #include <time.h>
@@ -6,7 +8,8 @@
 clock_t start, end;
 double interval;
 int counter;
-int gameround;
+ALLEGRO_FONT *font ;
+
 //**
 
 /*
@@ -16,7 +19,7 @@ Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
     Scene *pObj = New_Scene(label);
-
+    
     // setting derived object member
     pDerivedObj->background = al_load_bitmap("assets/img/background.png");
     pObj->pDerivedObj = pDerivedObj;
@@ -34,6 +37,7 @@ Scene *New_GameScene(int label)
     interval=1;
     counter=0;
     gameround=5;
+    font = al_load_ttf_font("assets/font/pirulen.ttf", 12, 0);
     ////
     return pObj;
 }
@@ -83,6 +87,7 @@ void game_scene_update(Scene *self)
         if (ele->dele)
             _Remove_elements(self, ele);
     }
+    
 }
 void game_scene_draw(Scene *self)
 {
@@ -95,6 +100,8 @@ void game_scene_draw(Scene *self)
         Elements *ele = allEle.arr[i];
         ele->Draw(ele);
     }
+    
+    al_draw_textf(font , al_map_rgb(255 , 0 , 0) , 500 , 100 , ALLEGRO_ALIGN_LEFT , "score: %d" , score[gameround]);
 }
 void game_scene_destroy(Scene *self)
 {

@@ -17,6 +17,11 @@ typedef enum CharacterType
     MOVE,
     ATK
 } CharacterType;
+typedef enum CharacterStatus
+{   NORMAL = 0,
+    EAT,
+    EAT_WRONG,
+} CharacterStatus;
 typedef struct _Character
 {
     int x, y;

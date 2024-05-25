@@ -21,6 +21,7 @@ typedef struct _Projectile
 {
     int x, y;          // the position of image
     int width, height; // the width and height of image
+    int ProjectileType;
     //**
     double v;             // the velocity of projectile
     //**

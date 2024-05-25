@@ -27,5 +27,6 @@ Scene *New_GameScene(int label);
 void game_scene_update(Scene *self);
 void game_scene_draw(Scene *self);
 void game_scene_destroy(Scene *self);
-
+int score[5]; //5 stage
+int gameround; //stage
 #endif

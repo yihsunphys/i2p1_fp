@@ -94,7 +94,10 @@ void game_init(Game *self)
     addon_init &= al_install_mouse();     // install mouse event
     addon_init &= al_install_audio();     // install audio event
     GAME_ASSERT(addon_init, "failed to initialize allegro addons.");
-    // Create display
+    // Create display, //width & height is now depend on pic size
+    ALLEGRO_BITMAP *img = al_load_bitmap("assets/img/background.png");
+    WIDTH=al_get_bitmap_width(img);
+    HEIGHT=al_get_bitmap_height(img);
     self->display = al_create_display(WIDTH, HEIGHT);
     GAME_ASSERT(self->display, "failed to create display.");
     // Create first scene

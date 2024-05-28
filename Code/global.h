@@ -14,8 +14,10 @@
 #define max(x, y) ((x) < (y) ? (y) : (x))
 // note that you can't assign initial value for extern variable!
 extern const double FPS;
-extern const int WIDTH;
-extern const int HEIGHT;
+//width is now depend on pic size
+extern  int WIDTH;
+extern  int HEIGHT;
+//
 extern int window;
 extern bool key_state[ALLEGRO_KEY_MAX];
 extern bool mouse_state[ALLEGRO_MOUSE_MAX_EXTRA_AXES];

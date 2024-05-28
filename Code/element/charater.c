@@ -27,7 +27,7 @@ Elements *New_Character(int label)
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
     pDerivedObj->x = 300;
-    pDerivedObj->y = 500;
+    pDerivedObj->y = HEIGHT-120;
     pDerivedObj->hitbox = New_Rectangle(pDerivedObj->x,
                                         pDerivedObj->y,
                                         pDerivedObj->x + pDerivedObj->width,
@@ -48,23 +48,24 @@ void Character_update(Elements *self)
 {
     Character *chara = ((Character *)(self->pDerivedObj));
 
-    if (key_state[ALLEGRO_KEY_B]){
+    //Using WASDX simplifies control
+    if (key_state[ALLEGRO_KEY_W]){
       chara->ProjectileType = RED;
       chara->img = al_load_bitmap("assets/img/red1.png");
     }
-    else if (key_state[ALLEGRO_KEY_T]){
+    else if (key_state[ALLEGRO_KEY_A]){
       chara->ProjectileType = BLUE;
       chara->img = al_load_bitmap("assets/img/blue1.png");
     }
-    else if (key_state[ALLEGRO_KEY_R]){
+    else if (key_state[ALLEGRO_KEY_S]){
       chara->ProjectileType = GREEN;
       chara->img = al_load_bitmap("assets/img/green1.png");
     }
-    else if (key_state[ALLEGRO_KEY_E]){
+    else if (key_state[ALLEGRO_KEY_D]){
       chara->ProjectileType = YELLOW;
       chara->img = al_load_bitmap("assets/img/yellow1.png");
     }
-    else if (key_state[ALLEGRO_KEY_A]){
+    else if (key_state[ALLEGRO_KEY_X]){
       chara->ProjectileType = WHITE;
       chara->img = al_load_bitmap("assets/img/white1.png");
     }

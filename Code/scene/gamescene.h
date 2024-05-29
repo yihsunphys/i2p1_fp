@@ -27,6 +27,15 @@ Scene *New_GameScene(int label);
 void game_scene_update(Scene *self);
 void game_scene_draw(Scene *self);
 void game_scene_destroy(Scene *self);
-int score[5]; //5 stage
+int score[6]; //5 stage 1~5
+int currentscore;
 int gameround; //stage
+
+clock_t start, end;
+double interval;
+int counter;
+int eatmoreWidth,eatmoreHeight;
+int boardWidth;
+int gamepause;
+int EachRoundAmount;
 #endif

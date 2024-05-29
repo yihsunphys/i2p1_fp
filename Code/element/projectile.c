@@ -50,7 +50,7 @@ Elements *New_Projectile(int label, int x, int y,double v,int type)
 void Projectile_update(Elements *self)
 {
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-     Obj->v+=0.1;
+     Obj->v+=0.15;
     _Projectile_update_position(self, 0, Obj->v);
 }
 void _Projectile_update_position(Elements *self, int dx, int dy)

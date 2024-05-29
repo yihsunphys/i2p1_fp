@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "endscene.h": "c",
+        "menu.h": "c",
+        "scene.h": "c",
+        "global.h": "c",
+        "element.h": "c",
+        "stdio.h": "c"
+    }
+}

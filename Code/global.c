@@ -3,9 +3,10 @@
 #include <stdbool.h>
 // variables for global usage
 const double FPS = 60.0;
-const int WIDTH = 900;
-const int HEIGHT = 672;
+int WIDTH;
+int HEIGHT;
 int window = 0;
+int Gamefinished=0;
 ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 ALLEGRO_EVENT event;
 ALLEGRO_TIMER *fps = NULL;

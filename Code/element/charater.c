@@ -8,6 +8,8 @@
 /*
    [Character function]
 */
+int timer = 15;
+ALLEGRO_BITMAP *imgData[5][10];
 Elements *New_Character(int label)
 {
     Character *pDerivedObj = (Character *)malloc(sizeof(Character));
@@ -22,6 +24,17 @@ Elements *New_Character(int label)
     al_attach_sample_instance_to_mixer(pDerivedObj->atk_Sound, al_get_default_mixer());
 
     // initial the geometric information of character
+    
+    char state_string[5][10] = {"red", "blue", "green", "yellow", "white"};
+    char buffer[100];
+    for(int i = 0; i < 5; i++){
+      for(int j = 1; j <= 5; j++){
+        sprintf(buffer, "assets/img/%s%d.png", state_string[i], j);
+        imgData[i][j] = al_load_bitmap(buffer);
+        }
+    }
+    
+
     pDerivedObj->img = al_load_bitmap("assets/img/red1.png");
     pDerivedObj->ProjectileType = RED; // red, blue, green, yellow, white 
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
@@ -74,6 +87,7 @@ void Character_update(Elements *self)
     // use the idea of finite state machine to deal with different state
     _Character_update_position(self,mouse.x-chara->x,0);
     chara->x = mouse.x; 
+    
 
 }
 void Character_draw(Elements *self)
@@ -81,19 +95,25 @@ void Character_draw(Elements *self)
     // with the state, draw corresponding image
     Character *chara = ((Character *)(self->pDerivedObj));
 
-    //if(chara->state == NORMAL){
+    if(chara->state == NORMAL){
       al_draw_bitmap(chara->img, chara->x-(chara->width)/2, chara->y, 0);
-    //}
-    /*
+    }
     else if(chara->state == EAT){
       // eat animation
-      chara->state = NORMAL;
+      //al_draw_bitmap(imgData[direction][sprite_pos], x, y, 0);
+      if(timer/4%2 == 0) al_draw_bitmap(imgData[chara->ProjectileType][2], chara->x-(chara->width)/2, chara->y, 0);
+      else al_draw_bitmap(imgData[chara->ProjectileType][3], chara->x-(chara->width)/2, chara->y, 0);
+      if(timer ){timer --;}
+      else { chara->state = NORMAL;timer=15;}
     }
     else if(chara->state == EAT_WRONG){
       // eat wrong animation
-      chara->state = NORMAL;
+      if(timer/4%2 == 0) al_draw_bitmap(imgData[chara->ProjectileType][4], chara->x-(chara->width)/2, chara->y-25, 0);
+      else al_draw_bitmap(imgData[chara->ProjectileType][5], chara->x-(chara->width)/2, chara->y-25, 0);
+      if(timer ){timer --;}
+      else { chara->state = NORMAL;timer=15;}
     }
-    */
+    
 
 }
 void Character_destory(Elements *self)

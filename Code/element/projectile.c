@@ -13,7 +13,6 @@ const char *ProjectileTypeaArray[] = {
     "milk", 
 };
 //**
-
 Elements *New_Projectile(int label, int x, int y,double v,int type)
 {
     Projectile *pDerivedObj = (Projectile *)malloc(sizeof(Projectile));
@@ -74,19 +73,23 @@ void Projectile_interact(Elements *self, Elements *tar)
         Projectile *Obj = ((Projectile *)(self->pDerivedObj));
         Character *chara = ((Character *)(tar->pDerivedObj));
         if(chara->hitbox->overlap(chara->hitbox, Obj->hitbox) &&
-           chara->ProjectileType == Obj->ProjectileType 
-           ){
-                self->dele = true;
+           chara->ProjectileType == Obj->ProjectileType && Obj->y>400
+           ){   
                 score[gameround]++;
                 chara->state = EAT;
+                self->dele = true;
         }
         else if(chara->hitbox->overlap(chara->hitbox, Obj->hitbox) &&
-           chara->ProjectileType != Obj->ProjectileType 
-           ){
-                
-                
+                chara->ProjectileType != Obj->ProjectileType &&
+                Obj->y>400
+           ){   
                 chara->state = EAT_WRONG;
         }
+        else if(!(chara->hitbox->overlap(chara->hitbox, Obj->hitbox)) && Obj->y>400){
+            chara->state = NORMAL; 
+        }
+
+
     }
 }
 void Projectile_draw(Elements *self)

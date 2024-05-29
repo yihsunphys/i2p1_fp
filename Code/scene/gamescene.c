@@ -34,7 +34,7 @@ Scene *New_GameScene(int label)
     pObj->Destroy = game_scene_destroy;
     //// Start the timer(in second)
     start = clock()/ CLOCKS_PER_SEC;
-    interval=1;
+    interval=0.6;
     counter=0;
     gameround=5;
     font = al_load_ttf_font("assets/font/pirulen.ttf", 12, 0);

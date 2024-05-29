@@ -34,6 +34,7 @@ typedef struct _Character
     int anime_time; // indicate how long the animation
     bool new_proj;
     ALLEGRO_BITMAP *img;
+    ALLEGRO_BITMAP *imgData[5][10];
     int ProjectileType;
     Shape *hitbox; // the hitbox of object
 } Character;

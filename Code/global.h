@@ -19,6 +19,7 @@ extern  int WIDTH;
 extern  int HEIGHT;
 //
 extern int window;
+extern int Gamefinished;
 extern bool key_state[ALLEGRO_KEY_MAX];
 extern bool mouse_state[ALLEGRO_MOUSE_MAX_EXTRA_AXES];
 extern Point mouse;

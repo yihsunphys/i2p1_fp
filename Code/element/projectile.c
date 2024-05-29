@@ -85,10 +85,6 @@ void Projectile_interact(Elements *self, Elements *tar)
            ){   
                 chara->state = EAT_WRONG;
         }
-        else if(!(chara->hitbox->overlap(chara->hitbox, Obj->hitbox)) && Obj->y>400){
-            chara->state = NORMAL; 
-        }
-
 
     }
 }

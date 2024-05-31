@@ -19,7 +19,12 @@ Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
     Scene *pObj = New_Scene(label);
-    
+    ALLEGRO_SAMPLE *song = al_load_sample("assets/sound/menu.mp3");;
+    ALLEGRO_SAMPLE_INSTANCE *sample_instance =  al_create_sample_instance(song);
+    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+    al_play_sample_instance(sample_instance);
     // setting derived object member
     pDerivedObj->background = al_load_bitmap("assets/img/background.png");
     pObj->pDerivedObj = pDerivedObj;

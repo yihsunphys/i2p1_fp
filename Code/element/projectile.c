@@ -25,6 +25,7 @@ Elements *New_Projectile(int label, int x, int y,double v,int type)
     //printf("%s", Buffer);
     pDerivedObj->img = al_load_bitmap(Buffer);
     //**
+    
     pDerivedObj->ProjectileType = type;
     pDerivedObj->width = al_get_bitmap_width(pDerivedObj->img);
     pDerivedObj->height = al_get_bitmap_height(pDerivedObj->img);
@@ -68,6 +69,12 @@ void _Projectile_update_position(Elements *self, int dx, int dy)
 }
 void Projectile_interact(Elements *self, Elements *tar)
 {
+    ALLEGRO_SAMPLE *song = al_load_sample("assets/sound/menu.mp3");;
+    ALLEGRO_SAMPLE_INSTANCE *sample_instance =  al_create_sample_instance(song);
+    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+    
     if (tar->label == Character_L)
     {   
         Projectile *Obj = ((Projectile *)(self->pDerivedObj));
@@ -78,6 +85,7 @@ void Projectile_interact(Elements *self, Elements *tar)
                 score[gameround]++;
                 chara->state = EAT;
                 self->dele = true;
+                al_play_sample_instance(sample_instance);
         }
         else if(chara->hitbox->overlap(chara->hitbox, Obj->hitbox) &&
                 chara->ProjectileType != Obj->ProjectileType &&
@@ -85,9 +93,7 @@ void Projectile_interact(Elements *self, Elements *tar)
            ){   
                 chara->state = EAT_WRONG;
         }
-        else if(!(chara->hitbox->overlap(chara->hitbox, Obj->hitbox)) && Obj->y>400){
-            chara->state = NORMAL; 
-        }
+
 
 
     }

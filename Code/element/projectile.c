@@ -13,8 +13,23 @@ const char *ProjectileTypeaArray[] = {
     "milk", 
 };
 //**
+ALLEGRO_SAMPLE *song;
+ALLEGRO_SAMPLE *song2;
+ALLEGRO_SAMPLE_INSTANCE *sample_instance;
+ALLEGRO_SAMPLE_INSTANCE *sample_instance2;
 Elements *New_Projectile(int label, int x, int y,double v,int type)
-{
+{   
+    song = al_load_sample("assets/sound/eat_correct.mp3");
+    sample_instance =  al_create_sample_instance(song);
+    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+
+    song2 = al_load_sample("assets/sound/eat_wrong.mp3");
+    sample_instance2 =  al_create_sample_instance(song2);
+    al_set_sample_instance_playmode(sample_instance2, ALLEGRO_PLAYMODE_ONCE);
+    al_restore_default_mixer();
+    al_attach_sample_instance_to_mixer(sample_instance2, al_get_default_mixer());
     Projectile *pDerivedObj = (Projectile *)malloc(sizeof(Projectile));
     Elements *pObj = New_Elements(label);
     // setting derived object member
@@ -51,7 +66,9 @@ Elements *New_Projectile(int label, int x, int y,double v,int type)
 void Projectile_update(Elements *self)
 {
     Projectile *Obj = ((Projectile *)(self->pDerivedObj));
-     Obj->v+=0.15;
+     
+    if(Gamefinished) Obj->v+=0.5;
+    else Obj->v+=0.15;
     _Projectile_update_position(self, 0, Obj->v);
 }
 void _Projectile_update_position(Elements *self, int dx, int dy)
@@ -69,11 +86,7 @@ void _Projectile_update_position(Elements *self, int dx, int dy)
 }
 void Projectile_interact(Elements *self, Elements *tar)
 {
-    ALLEGRO_SAMPLE *song = al_load_sample("assets/sound/menu.mp3");;
-    ALLEGRO_SAMPLE_INSTANCE *sample_instance =  al_create_sample_instance(song);
-    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
-    al_restore_default_mixer();
-    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
+
     
     if (tar->label == Character_L)
     {   
@@ -92,9 +105,8 @@ void Projectile_interact(Elements *self, Elements *tar)
                 Obj->y>400
            ){   
                 chara->state = EAT_WRONG;
+                al_play_sample_instance(sample_instance2);
         }
-
-
 
     }
 }

@@ -38,4 +38,6 @@ int eatmoreWidth,eatmoreHeight;
 int boardWidth;
 int gamepause;
 int EachRoundAmount;
+ALLEGRO_SAMPLE *gamescene_song;
+ALLEGRO_SAMPLE_INSTANCE *gamescene_sample_instance;
 #endif

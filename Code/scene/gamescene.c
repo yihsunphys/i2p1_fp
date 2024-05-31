@@ -15,16 +15,22 @@ ALLEGRO_BITMAP * board;
 /*
    [GameScene function]
 */
+
+
 Scene *New_GameScene(int label)
 {
     GameScene *pDerivedObj = (GameScene *)malloc(sizeof(GameScene));
     Scene *pObj = New_Scene(label);
-    ALLEGRO_SAMPLE *song = al_load_sample("assets/sound/menu.mp3");;
-    ALLEGRO_SAMPLE_INSTANCE *sample_instance =  al_create_sample_instance(song);
-    al_set_sample_instance_playmode(sample_instance, ALLEGRO_PLAYMODE_LOOP);
+   
+    gamescene_song = al_load_sample("assets/sound/Splashing_Around_cut.mp3");;
+    if(Gamefinished) gamescene_song = al_load_sample("assets/sound/DarkSoul.mp3");;
+    gamescene_sample_instance =  al_create_sample_instance(gamescene_song);
+    al_set_sample_instance_playmode(gamescene_sample_instance, ALLEGRO_PLAYMODE_LOOP);
     al_restore_default_mixer();
-    al_attach_sample_instance_to_mixer(sample_instance, al_get_default_mixer());
-    al_play_sample_instance(sample_instance);
+    al_attach_sample_instance_to_mixer(gamescene_sample_instance, al_get_default_mixer());
+    al_play_sample_instance(gamescene_sample_instance);
+
+
     // setting derived object member
     pDerivedObj->background = al_load_bitmap("assets/img/background.png");
     pObj->pDerivedObj = pDerivedObj;
@@ -38,7 +44,9 @@ Scene *New_GameScene(int label)
 
     //** Start the timer(in second)
     start = clock();
-    interval=1;
+    
+    if(Gamefinished) interval = 0.5;
+    else interval=1;
     memset(score, 0, sizeof(score));
     currentscore=0;
 
@@ -55,6 +63,7 @@ Scene *New_GameScene(int label)
     //**
 
     return pObj;
+
 }
 void game_scene_update(Scene *self)
 {
@@ -80,6 +89,7 @@ if(!gamepause){
         currentscore+=score[gameround];
         gameround++;
         interval=1;
+        if(Gamefinished) interval = 0.5;
         gamepause=1;
         counter=0;
         return;
@@ -157,10 +167,12 @@ void game_scene_draw(Scene *self)
 
 }
 void game_scene_destroy(Scene *self)
-{
+{  printf("destroy");
     GameScene *Obj = ((GameScene *)(self->pDerivedObj));
     ALLEGRO_BITMAP *background = Obj->background;
     al_destroy_bitmap(background);
+    //al_destroy_sample(song);
+    //al_destroy_sample_instance(sample_instance);
     ElementVec allEle = _Get_all_elements(self);
     for (int i = 0; i < allEle.len; i++)
     {
